@@ -4,15 +4,16 @@ library(sp)
 library(raster)
 library(sf)
 library(AICcmodavg)
+library(imputeTS)
 
 memory.limit(size = 99999999)
 setwd("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie")
 
-captfile2019<-read.table("C:/Users/nelsonj7/Box/secrMcK/2019CaptureData.txt")
-trapfile2019<-read.table("C:/Users/nelsonj7/Box/secrMcK/2019McKTraps4k.txt")
+captfile2019<-read.table("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/2019McKCH.txt")
+trapfile2019<-read.table("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/2019McKTraps.txt")
 
-captfile2018<-read.table("C:/Users/nelsonj7/Box/secrMcK/2018CaptureData.txt")
-trapfile2018<-read.table("C:/Users/nelsonj7/Box/secrMcK/2018McKTraps4k.txt")
+captfile2018<-read.table("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/2018McKCH.txt")
+trapfile2018<-read.table("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/2018McKTraps.txt")
 
 head(captfile2019)
 head(captfile2018)
@@ -29,18 +30,20 @@ head(trapfile2019)
 #I think I just need to stack trap files on top of each other and add max # of detectors from 18 to 19
 #to correct the TrapID
 
-captfile2019[,2]<-captfile2019[,2]+max(captfile2018[,2])
+captfile2019[,2]<-captfile2019[,2]+max(captfile2019[,2])
 captfile2019[,4]<-captfile2019[,4]+max(trapfile2018[,1])
 
 trapfile2019[,1]<-trapfile2019[,1] + max(trapfile2018[,1])
 
 combinedcaptfile<-rbind(captfile2018, captfile2019)
-combinedtrapfile<-rbind(trapfile2018, trapfile2019)
 
-combinedtrapfile[,c(2,3)]<-combinedtrapfile[,c(2,3)]/1000
+trapfile2018[,c(2,3)]<-trapfile2018[,c(2,3)]/1000
+trapfile2019[,c(2,3)]<-trapfile2019[,c(2,3)]/1000
 
 write.table(combinedcaptfile, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/combinedcaptfile.txt", row.names = FALSE, quote = FALSE)
-write.table(combinedtrapfile, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/combinedtrapfile.txt", row.names = FALSE, quote = FALSE)
+write.table(trapfile2018, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/2018McKtrapfile.txt", row.names = FALSE, quote = FALSE)
+write.table(trapfile2019, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/2019McKtrapfile.txt", row.names = FALSE, quote = FALSE)
+#Add # to first row of both .txt files!
 
 ###################################################################################
 ###################################################################################
@@ -48,9 +51,9 @@ write.table(combinedtrapfile, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/
 ###################################################################################
 ###################################################################################
 library(secr)
-McKcapt.comb<-read.capthist("combinedcaptfile.txt", "combinedtrapfile.txt", 
+McKcapt.comb<-read.capthist("combinedcaptfile.txt", trapfile = c("2018McKtrapfile.txt", "2019McKtrapfile.txt"), 
                               detector="count", fmt = "trapID", covnames = "Sex", 
-                              trapcovnames = c("Julian", "effort", "precip"))
+                              trapcovnames = c("Julian", "effort", "precip", "Observers"))
 
 summary(McKcapt.comb)
 plot(McKcapt.comb, tracks = TRUE)
@@ -298,12 +301,13 @@ saveRDS(g0.effort.precip, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkS
 g0.effort.effort2<-secr.fit(McKcapt.comb, model = list(D~1, g0~effort + effort^2),
                             fixed = list(sigma = 1.855), mask = McKMask.comb, bionomN = 1,
                             start = c(6.4, -4, 0.35, 0.35), method = "Nelder-Mead")
-
 saveRDS(g0.effort.effort2, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.effort2.rds")
+#g0.effort.effort2<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.effort2.rds")
 
 g0.Julian.precip<-secr.fit(McKcapt.comb, model = list(D~1, g0~Julian+precip),
                            fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
-                           start = c(6.4, -4, 0.1, 0.4), method = "Nelder-Mead")
+                           start = c(6.4, -4, -0.2, 0.4), method = "Nelder-Mead")
+saveRDS(g0.Julian.precip, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.Julian.precip.rds")
 #g0.Julian.precip<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.Julian.precip.rds")
 
 g0.effort.Julian.precip<-secr.fit(McKcapt.comb, model = list(D~1, g0~effort + precip + Julian),
@@ -313,25 +317,28 @@ g0.effort.Julian.precip<-secr.fit(McKcapt.comb, model = list(D~1, g0~effort + pr
 saveRDS(g0.effort.Julian.precip, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.Julian.precip.rds")
 #g0.effort.Julian.precip<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.Julian.precip.rds")
 
-g0.models<-secrlist(null.model, g0.session, g0.effort, g0.precip, g0.Julian, g0.effort.Julian, g0.effort.precip,
+g0.models<-secrlist(null.model, g0.session, g0.effort, g0.precip, g0.Julian, g0.Julian.precip, g0.effort.Julian, g0.effort.precip,
                     g0.effort.Julian.precip)
 
 AIC(g0.models)
 
-D.DDE.g0.<-secr.fit(McKcapt.comb.telem, model = list(D~DDE, g0~effort + precip),
-                    mask = McKMask.comb, binomN = 1,  start = c(25, -23, -2, -2, 0.6))
+D.DDE.g0.<-secr.fit(McKcapt.comb, model = list(D~DDE, g0~effort + precip),
+                    fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
+                    start = c(6.49, 4, -4.3, -0.7, 0.47), method = "Nelder-Mead")
 
 saveRDS(D.DDE.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.g0.rds")
 #D.DDE.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.g0.rds")
 
-D.DFE.g0.<-secr.fit(McKcapt.comb.telem, model = list(D~DFE, g0~1, sigma~1),
-                    mask = McKMask.comb, binomN = 1,  start = c(25, -23, -2, -2, 0.6))
+D.DFE.g0.<-secr.fit(McKcapt.comb, model = list(D~DFE, g0~effort + precip, sigma~1),
+                    fixed = list(sigma = 1.855), mask = McKMask.comb, 
+                    binomN = 1,  start = c(5, -1, -2.9, -0.4, 0.3), method = "Nelder-Mead")
 
 saveRDS(D.DFE.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DFE.g0.rds")
 #D.DFE.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DFE.g0.rds")
 
-D.Roads.g0.<-secr.fit(McKcapt.comb.telem, model = list(D~Roads, g0~effort + precip, sigma~1),
-                      mask = McKMask.comb, binomN = 1,  start = c(25, -23, -2, -2, 0.6))
+D.Roads.g0.<-secr.fit(McKcapt.comb, model = list(D~Roads, g0~effort + precip, sigma~1),
+                      fixed = list(sigma = 1.855), mask = McKMask.comb, 
+                      binomN = 1,  start = c(5, -1, -2.9, -0.4, 0.3), method = "Nelder-Mead")
 
 saveRDS(D.Roads.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.Roads.g0.rds")
 #D.Roads.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.Roads.g0.rds")
