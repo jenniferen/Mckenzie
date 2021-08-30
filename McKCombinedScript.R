@@ -284,6 +284,7 @@ g0.univariate.models<-secrlist(g0.session, null.model, g0.Julian, g0.effort, g0.
 
 AIC(g0.univariate.models)
 
+####Bivariate g0 models
 g0.effort.Julian<-secr.fit(McKcapt.comb, model = list(D~1, g0~effort+Julian), 
                            fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,  
                            start = c(6.4, -4, 0.35, 0.1), method = "Nelder-Mead")
@@ -301,6 +302,7 @@ saveRDS(g0.effort.precip, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkS
 g0.effort.effort2<-secr.fit(McKcapt.comb, model = list(D~1, g0~effort + effort^2),
                             fixed = list(sigma = 1.855), mask = McKMask.comb, bionomN = 1,
                             start = c(6.4, -4, 0.35, 0.35), method = "Nelder-Mead")
+
 saveRDS(g0.effort.effort2, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.effort2.rds")
 #g0.effort.effort2<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.effort2.rds")
 
@@ -310,6 +312,26 @@ g0.Julian.precip<-secr.fit(McKcapt.comb, model = list(D~1, g0~Julian+precip),
 saveRDS(g0.Julian.precip, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.Julian.precip.rds")
 #g0.Julian.precip<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.Julian.precip.rds")
 
+g0.session.effort<-secr.fit(McKcapt.comb, model = list(D~1, g0~session + effort),
+                            fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
+                            start = c(6.4, -4, -0.2, 0.4), method = "Nelder-Mead")
+saveRDS(g0.session.effort, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.session.effort.rds")
+#g0.session.effort<-readRDS("C:/Users/nelsonj7/Deskotp/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.session.effort.rds")
+
+g0.session.Julian<-secr.fit(McKcapt.comb, model = list(D~1, g0~session + Julian),
+                            fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
+                            start = c(6.4, -4, -0.2, 0.4), method = "Nelder-Mead")
+saveRDS(g0.session.Julian, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.session.Julian.rds")
+#g0.session.Julian<-readRDS("C:/Users/nelsonj7/Deskotp/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.session.Julian.rds")
+  
+g0.session.precip<-secr.fit(McKcapt.comb, model = list(D~1, g0~session + precip),
+                            fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
+                            start = c(6.4, -4, -0.2, 0.4), method = "Nelder-Mead")
+saveRDS(g0.session.precip, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.session.precip.rds")
+#g0.session.precip<-readRDS("C:/Users/nelsonj7/Deskotp/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.session.precip.rds")
+
+
+###Trivariate g0 models
 g0.effort.Julian.precip<-secr.fit(McKcapt.comb, model = list(D~1, g0~effort + precip + Julian),
                                   fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,  
                                   start = c(6.4, -4, 0.35, 0.4, 0.1), method = "Nelder-Mead")
@@ -317,8 +339,38 @@ g0.effort.Julian.precip<-secr.fit(McKcapt.comb, model = list(D~1, g0~effort + pr
 saveRDS(g0.effort.Julian.precip, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.Julian.precip.rds")
 #g0.effort.Julian.precip<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.Julian.precip.rds")
 
+g0.effort.Julian.session<-secr.fit(McKcapt.comb, model = list(D~1, g0~effort + session + Julian),
+                                  fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,  
+                                  start = c(6.4, -4, 0.35, 0.4, 0.1), method = "Nelder-Mead")
+
+saveRDS(g0.effort.Julian.session, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.Julian.session.rds")
+#g0.effort.Julian.session<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.Julian.session.rds")
+
+g0.effort.precip.session<-secr.fit(McKcapt.comb, model = list(D~1, g0~effort + precip + session),
+                                  fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,  
+                                  start = c(6.4, -4, 0.35, 0.4, 0.1), method = "Nelder-Mead")
+
+saveRDS(g0.effort.precip.session, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.precip.session.rds")
+#g0.effort.precip.session<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.precip.session.rds")
+
+g0.Julian.precip.session<-secr.fit(McKcapt.comb, model = list(D~1, g0~session + precip + Julian),
+                                  fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,  
+                                  start = c(6.4, -4, 0.35, 0.4, 0.1), method = "Nelder-Mead")
+
+saveRDS(g0.Julian.precip.session, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.Julian.precip.session.rds")
+#g0.Julian.precip.session<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.Julian.precip.session.rds")
+
+#####Global g0 model
+g0.effort.Julian.precip.session<-secr.fit(McKcapt.comb, model = list(D~1, g0~effort + Julian + precip + session),
+                                          fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
+                                          start = c(6.4, -4, 0.35, 0.4, 0.1, -2))
+
+saveRDS(g0.effort.Julian.precip.session, file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.Julian.precip.session.rds")
+#g0.effort.Julian.precip.session<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/g0.effort.Julian.precip.session.rds")
+
 g0.models<-secrlist(null.model, g0.session, g0.effort, g0.precip, g0.Julian, g0.Julian.precip, g0.effort.Julian, g0.effort.precip,
-                    g0.effort.Julian.precip)
+                    g0.session.effort, g0.session.Julian, g0.session.precip, g0.effort.Julian.precip,
+                    g0.effort.Julian.session, g0.effort.precip.session, g0.Julian.precip.session, g0.effort.Julian.precip.session)
 
 AIC(g0.models)
 
