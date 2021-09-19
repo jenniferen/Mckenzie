@@ -368,7 +368,7 @@ D.Roads.slope.g0.<-secr.fit(McKcapt.comb, model = list(D~Roads + PercentSlope, g
                             start = c(6.49, 4, 2, -3.7, 0.9, -0.55), method = "Nelder-Mead")
 
 saveRDS(D.Roads.slope.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.Roads.Slope.g0.rds")
-#D.Roads.slope.g0.<-readRDS("C:/Users/nelsonj7/Box/secr/CombinedYears/Results/August2021/Telemetry/D.Roads.Slope.g0.rds")
+#D.Roads.slope.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.Roads.Slope.g0.rds")
 
 D.Roads.precip.g0.<-secr.fit(McKcapt.comb, model = list(D~Roads + Precip, g0~session + Julian),
                              fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
@@ -427,6 +427,17 @@ D.slope.DDE.g0.<-secr.fit(McKcapt.comb, model = list(D~PercentSlope + DDE, g0~se
 
 saveRDS(D.slope.DDE.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.slope.DDE.g0.rds")
 #D.slope.DDE.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.slope.DDE.g0.rds")
+
+#############################
+###AIC of Bivariate Models###
+#############################
+
+D.bivariate.AIC<-secrlist(D.Crops.DDE.g0., D.Crops.DFE.g0., D.Crops.precip.g0., D.Crops.Roads.g0., D.Crops.slope.g0.,
+                          D.Roads.DDE.g0., D.Roads.DFE.g0., D.Roads.precip.g0., D.Roads.slope.g0., D.DFE.DDE.g0., 
+                          D.DFE.Roads.g0., D.DFE.precip.g0., D.DFE.slope.g0., D.precip.DDE.g0., D.precip.slope.g0.,
+                          D.DDE.g0., D.DFE.g0., D.precip.g0., D.Roads.g0., D.slope.g0., D.Crops.g0.)
+
+AIC(D.bivariate.AIC)
 
 ###############################
 ###Trivariate Density models###
@@ -506,7 +517,7 @@ D.Roads.Precip.slope.g0.<-secr.fit(McKcapt.comb, model = list(D~Roads + Precip +
                                fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
                                start = c(6.49, 2.3, 1.2, 4, -3.7, 0.9, -0.55), method = "Nelder-Mead")
 
-saveRDS(D.DFE.Precip.slope.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DFE.Precip.slope.g0.rds")
+saveRDS(D.Roads.Precip.slope.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.Roads.Precip.slope.g0.rds")
 #D.DFE.Precip.slope.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DFE.Precip.slope.g0.rds")
 
 D.Roads.Precip.Crops.g0.<-secr.fit(McKcapt.comb, model = list(D~Roads + Precip + Crops, g0~session + Julian),
@@ -520,7 +531,7 @@ D.Roads.slope.Crops.g0.<-secr.fit(McKcapt.comb, model = list(D~Roads + PercentSl
                                   fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
                                   start = c(6.49, 2.3, 1.2, 4, -3.7, 0.9, -0.55), method = "Nelder-Mead")
 
-saveRDS(D.Roads.Precip.Crops.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.Roads.Precip.Crops.g0.rds")
+saveRDS(D.Roads.slope.Crops.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.Roads.slope.Crops.g0.rds")
 #D.Roads.Precip.Crops.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.Precip.Crops.g0.rds")
 
 D.Precip.slope.Crops.g0.<-secr.fit(McKcapt.comb, model = list(D~Precip + PercentSlope + Crops, g0~session + Julian),
