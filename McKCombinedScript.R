@@ -471,6 +471,49 @@ D.DDE.DFE.Crops.g0.<-secr.fit(McKcapt.comb, model = list(D~DDE + DFE + Crops, g0
 saveRDS(D.DDE.DFE.Crops.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.DFE.Crops.g0.rds")
 #D.DDE.DFE.Crops.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.DFE.Crops.g0.rds")
 
+D.DDE.Roads.Precip.g0.<-secr.fit(McKcapt.comb, model = list(D~DDE + Roads + Precip, g0~session + Julian),
+                              fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
+                              start = c(6.49, 2.3, 1.2, 4, -3.7, 0.9, -0.55), method = "Nelder-Mead")
+
+saveRDS(D.DDE.Roads.Precip.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.Roads.Precip.g0.rds")
+#D.DDE.DFE.Crops.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.Roads.Precip.g0.rds")
+
+D.DDE.Roads.slope.g0.<-secr.fit(McKcapt.comb, model = list(D~DDE + Roads + PercentSlope, g0~session + Julian),
+                                 fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
+                                 start = c(6.49, 2.3, 1.2, 4, -3.7, 0.9, -0.55), method = "Nelder-Mead")
+
+saveRDS(D.DDE.Roads.slope.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.Roads.slope.g0.rds")
+#D.DDE.Roads.slope.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.Roads.slope.g0.rds")
+
+D.DDE.Roads.Crops.g0.<-secr.fit(McKcapt.comb, model = list(D~DDE + Roads + Crops, g0~session + Julian),
+                                 fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
+                                 start = c(6.49, 2.3, 1.2, 4, -3.7, 0.9, -0.55), method = "Nelder-Mead")
+
+saveRDS(D.DDE.Roads.Crops.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.Roads.Crops.g0.rds")
+#D.DDE.Roads.Crops.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.Roads.Crops.g0.rds")
+
+D.DDE.Precip.slope.g0.<-secr.fit(McKcapt.comb, model = list(D~DDE + Precip + PercentSlope, g0~session + Julian),
+                                 fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
+                                 start = c(6.49, 2.3, 1.2, 4, -3.7, 0.9, -0.55), method = "Nelder-Mead")
+
+saveRDS(D.DDE.Precip.slope.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.Precip.slope.g0.rds")
+#D.DDE.Precip.slope.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.Precip.slope.g0.rds")
+
+D.DDE.Precip.Crops.g0.<-secr.fit(McKcapt.comb, model = list(D~DDE + Precip + Crops, g0~session + Julian),
+                                 fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
+                                 start = c(6.49, 2.3, 1.2, 4, -3.7, 0.9, -0.55), method = "Nelder-Mead")
+
+saveRDS(D.DDE.Precip.Crops.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.Precip.Crops.g0.rds")
+#D.DDE.Precip.Crops.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.Precip.Crops.g0.rds")
+
+D.DDE.slope.Crops.g0.<-secr.fit(McKcapt.comb, model = list(D~DDE + PercentSlope + Crops, g0~session + Julian),
+                                 fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
+                                 start = c(6.49, 2.3, 1.2, 4, -3.7, 0.9, -0.55), method = "Nelder-Mead")
+
+saveRDS(D.DDE.slope.Crops.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.slope.Crops.g0.rds")
+#D.DDE.slope.Crops.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.slope.Crops.g0.rds")
+
+
 D.DFE.Roads.Precip.g0.<-secr.fit(McKcapt.comb, model = list(D~DFE + Roads + Precip, g0~session + Julian),
                                  fixed = list(sigma = 1.855), mask = McKMask.comb, binomN = 1,
                                  start = c(6.49, 2.3, 1.2, 4, -3.7, 0.9, -0.55), method = "Nelder-Mead")
@@ -665,7 +708,23 @@ D.DDE.DFE.Roads.Precip.slope.Crops.g0.<-secr.fit(McKcapt.comb, model = list(D~DD
 saveRDS(D.DDE.DFE.Roads.Precip.slope.Crops.g0., file = "C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.DFE.Roads.Precip.slope.Crops.g0.rds")
 #D.DDE.DFE.Roads.Precip.slope.Crops.g0.<-readRDS("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/McKenzie/Results/2021August/D.DDE.DFE.Roads.Precip.slope.Crops.g0.rds")
 
+###############################
+###AIC of All Density Models###
+###############################
 
+D.bivariate.AIC<-secrlist(D.Crops.DDE.g0., D.Crops.DFE.g0., D.Crops.precip.g0., D.Crops.Roads.g0., D.Crops.slope.g0.,
+                          D.Roads.DDE.g0., D.Roads.DFE.g0., D.Roads.precip.g0., D.Roads.slope.g0., D.DFE.DDE.g0., 
+                          D.DFE.Roads.g0., D.DFE.precip.g0., D.DFE.slope.g0., D.precip.DDE.g0., D.precip.slope.g0.,
+                          D.DDE.g0., D.DFE.g0., D.precip.g0., D.Roads.g0., D.slope.g0., D.Crops.g0., D.DDE.Roads.,
+                          D.DDE.DFE.Roads.g0., D.DDE.DFE.Precip.g0., D.DDE.DFE.slope.g0., D.DDE.DFE.Crops.g0.,
+                          D.DFE.Roads.Precip.g0., D.DFE.Roads.slope.g0., D.DFE.Roads.Crops.g0.,
+                          D.DFE.Precip.slope.g0., D.DFE.Precip.Crops.g0., D.DFE.slope.Crops.g0., 
+                          D.Roads.Precip.slope.g0., D.Roads.Precip.Crops.g0., D.Precip.slope.Crops.g0.,
+                          
+                          D.DDE.DFE.Roads.Crops.g0.,
+                          D.DDE.DFE)
+
+AIC(D.bivariate.AIC)
 
 ########
 ##run in parallel
