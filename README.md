@@ -10,4 +10,5 @@ This is the messiest code of all the scripts...
 ## Create capture history files with 
 2018: 2018McKCaptHistFileCode.R and 2018McKElkLocations.csv  
 2019: 2019McKCaptHistFileCode.R and 2019McKenzieSampleCoordinatesUTMIndividualsAdded.csv  
+*Note: To match Tioga process, use SegmentTransects_2018.R and SegmentTransects_2019.R to create capture histories*
 
