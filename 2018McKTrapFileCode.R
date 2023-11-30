@@ -7,8 +7,31 @@ setwd("~/OSU/ElkSCR/McKenzie")
 data<-read.csv("McKTracksOnepersonpertrack.csv")
 head(data)
 
+
+#Look at distances among all detections
+#Read in coordinates and sex of identified elk
+TiogaElk2018<-read.csv("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/Tioga/2018TiogaElkCoordinatesUTMSex.csv", header=TRUE)
+head(TiogaElk2018)
+colnames(TiogaElk2018)<-c("X", "TransectID", "LabID", "Elk.Assignment", "UTM_E", "UTM_N", "Lon", "Lat")
+
+#Read in coordinates and sex of identified elk
+TiogaElk2019<-read.table("C:/Users/nelsonj7/Desktop/MSUComputer/OSU/ElkSCR/Tioga/2019TiogaElkCoordinatesUTMSex.txt", header=TRUE)
+head(TiogaElk2019)
+
+#Combine coordinates of Tioga2018 and 2019 into one dataframe and compute distance matrix among all detections between both years
+coords.combined<-rbind(TiogaElk2018[,c(5,6)], TiogaElk2019[,c(1,2)])
+
+dst<-dist(coords.combined)
+dst<-data.matrix(dst)
+dim<-ncol(dst)
+dst<-dst[!dst==0]
+hist(dst, breaks = 7637, xlim = c(0,1500), main = "Distances among all detected elk \n in 2018 and 2019 - Tioga",
+     xlab = "Distance (meters)")
+range(dst)
+
 ###What do I want to do? Group each transect, calculate distances between points,
-##choose distance to separate by and extract those points. Let's start with 200 m.
+##choose distance to separate by and extract those points. Choose segment distance 
+#using histograms above. Going with 300 meters.
 data.sp<-SpatialPointsDataFrame(coords = data[,c(9,8)], 
                                 data = data,
                                 proj4string = CRS(as.character("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")))
@@ -98,7 +121,7 @@ seg.6000<-do.call('rbind', by(data.sp.utm, data.sp.utm$Transect, function(x) x[c
 #seg.comb<-rbind(seg.500, seg.1000, seg.1500, seg.2000, seg.2500, seg.3000, seg.3500, seg.4000, seg.4500, seg.5000,
 #                seg.5500, seg.6000)
 
-#600 neters
+#600 meters
 seg.comb<-rbind(seg.600, seg.1200, seg.1800, seg.2400, seg.3000, seg.3600, seg.4200, seg.4800, seg.5600)
 
 seg.comb.trim<-seg.comb[!duplicated(seg.comb$OBJECTID),]
