@@ -14,5 +14,5 @@ This is the messiest code of all the scripts...
 
 ## Telemetry information  
 2018: 2018McKTelemetry.txt and 2018McKTelemetry.Reduced.txt where the reduced version is 300 points total.  
-2019: 2019McKTelemetry.txt and 2019MckTelemetry.Reduced.txt where the reduced version is 300 points total.
+2019: 2019McKTelemetry.txt and 2019MckTelemetry.Reduced.txt where the reduced version is 300 points total.  
 *Note: We fixed sigma when we ran models to appease computational capabilities. The fixed sigma was estimated with this data, though.*
